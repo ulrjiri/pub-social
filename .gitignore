@@ -1,0 +1,6 @@
+benchmarks/LogitChallenge/logit_data*.txt
+benchmarks/LogitChallenge/**/*.exe
+benchmarks/LogitChallenge/**/target
+benchmarks/LogitChallenge/**/*.class
+benchmarks/LogitChallenge/logit*.log*
+
