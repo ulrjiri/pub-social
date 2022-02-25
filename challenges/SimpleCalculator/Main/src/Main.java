@@ -54,7 +54,7 @@ class Lexer {
         double tmp = array[index] - '0';
         ++index;
         while(isNumeric())
-            tmp = (tmp * 10) + array[index++];
+            tmp = (tmp * 10) + array[index++] - '0';
         if(index < array.length && array[index] == '.') {
             ++index;
             double dec = 0, order = 10;

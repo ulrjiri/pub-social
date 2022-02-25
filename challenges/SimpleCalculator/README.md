@@ -72,7 +72,7 @@ Very readable, can be mechanically very easily derived from the grammar.
 ### AST-Based (Abstract Systax Tree-Based)
 
 Example of AST (abstract syntax tree):
-```
+```text
   8*2 + 7 - 3*4
 
         +
