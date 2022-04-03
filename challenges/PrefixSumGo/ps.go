@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// Load simulation - wait for one second
 func simulateLoad() {
 	time.Sleep(1 * time.Second)
 }
@@ -27,8 +28,8 @@ func prefSum_linear(a *[]int32) ([]int32, float32) {
 		}
 	}
 
-	elapsed := float32(time.Since(t_start) / time.Second)
-	return s, elapsed
+	elapsed_time := float32(time.Since(t_start) / time.Second)
+	return s, elapsed_time
 }
 
 func prefSum_divideConquerSerial(a *[]int32) ([]int32, float32) {
@@ -61,55 +62,70 @@ func prefSum_divideConquerParallel(a *[]int32) ([]int32, float32) {
 		divideConquerRecursiveParallel(a, &s, 0, l-1)
 	}
 
-	elapsed := float32(time.Since(t_start) / time.Second)
-	return s, elapsed
+	elapsed_time := float32(time.Since(t_start) / time.Second)
+	return s, elapsed_time
 }
 
 func divideConquerRecursive(a *[]int32, s *[]int32, from int, to int) {
+
+	// error state - do nothing
 	if from > to {
 		return
 	}
+
+	// trivial casewith one element only
 	if from == to {
 		(*s)[from] = (*a)[from]
 		simulateLoad()
 		return
-	}
-	m := (from + to) / 2
-	divideConquerRecursive(a, s, from, m)
-	divideConquerRecursive(a, s, m+1, to)
-	x := (*s)[m]
-	for i := m + 1; i <= to; i++ {
-		(*s)[i] += x
+
+	} else {
+		// complex case: split it to two parts and call the solution recursivelly
+		m := (from + to) / 2
+		divideConquerRecursive(a, s, from, m)
+		divideConquerRecursive(a, s, m+1, to)
+
+		// aggregate result
+		x := (*s)[m]
+		for i := m + 1; i <= to; i++ {
+			(*s)[i] += x
+		}
 	}
 }
 
 func divideConquerRecursiveParallel(a *[]int32, s *[]int32, from int, to int) {
+
+	// error state - do nothing
 	if from > to {
 		return
 	}
 
+	// trivial casewith one element only
 	if from == to {
 		(*s)[from] = (*a)[from]
 		simulateLoad()
 		return
-	}
 
-	m := (from + to) / 2
+	} else {
 
-	wg := sync.WaitGroup{}
-	wg.Add(2)
-	go func() {
-		defer wg.Done()
-		divideConquerRecursiveParallel(a, s, from, m)
-	}()
-	go func() {
-		defer wg.Done()
-		divideConquerRecursiveParallel(a, s, m+1, to)
-	}()
-	wg.Wait()
+		// complex case: split it to two parts and call the solution recursivelly in parallel
+		m := (from + to) / 2
+		wg := sync.WaitGroup{}
+		wg.Add(2)
+		go func() {
+			defer wg.Done() // do not forget calling Done at the end of the routine
+			divideConquerRecursiveParallel(a, s, from, m)
+		}()
+		go func() {
+			defer wg.Done() // do not forget calling Done at the end of the routine
+			divideConquerRecursiveParallel(a, s, m+1, to)
+		}()
+		wg.Wait() // wait until both parts are done
 
-	x := (*s)[m]
-	for i := m + 1; i <= to; i++ {
-		(*s)[i] += x
+		// merge the results from the pararell run (left part is ok, adjust right part accordingly)
+		x := (*s)[m]
+		for i := m + 1; i <= to; i++ {
+			(*s)[i] += x
+		}
 	}
 }
