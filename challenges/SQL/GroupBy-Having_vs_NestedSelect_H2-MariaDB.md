@@ -2,7 +2,32 @@
 
 ## Technical Constraints
 
- H2 Database, using MariaDB dialect
+ H2 Database, using MariaDB dialect.
+
+Connection string:
+
+```cmd
+jdbc:h2:/.../h2/data/db1;MODE=MariaDB;
+```
+
+It may be needed to create a new database using the command line (Shell) tool:
+
+```cmd
+java -cp h2-*.jar org.h2.tools.Shell
+```
+
+To configure listen port, the content of ~/.h2.server.properties has to be adjusted:
+
+```cmd
+#H2 Server Properties
+...
+webAllowOthers=false
+webPort=18082
+```
+
+URL in the browser might be adjusted to localhost in some cases:
+
+[http://localhost:18082/](http://localhost:18082/)
 
 ## Input Data
 
@@ -58,3 +83,10 @@ FROM (SELECT COUNT(*) AS COUNT_ALL,
       WHERE DEPT_ID = __given_dept_id__) N
 WHERE N.COUNT_ALL = N.COUNT_SALARIES_OVER
 ```
+
+## Links
+
+[http://www.h2database.com/html/tutorial.html](http://www.h2database.com/html/tutorial.html)
+
+[http://www.h2database.com/html/grammar.html](http://www.h2database.com/html/grammar.html)
+
