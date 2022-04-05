@@ -68,6 +68,17 @@ GROUP BY DEPT_ID
 HAVING COUNT(*) = SUM(CASE WHEN E.SALARY > 1000 THEN 1 ELSE 0 END)
 ```
 
+The "GROUP BY" is redundant in the above query because there is already a strict filtering for the DEPT_ID in the WHERE clause. The query can be simplified:
+
+```SQL
+-- The following works just in positive case (DEPT_ID=1). 
+-- In negative case (DEPT_ID=2), empty set (null) is returned.
+SELECT CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END AS ALL_SALARIES_OVER
+FROM EMPL E
+WHERE DEPT_ID = __given_dept_id__
+HAVING COUNT(*) = SUM(CASE WHEN E.SALARY > 1000 THEN 1 ELSE 0 END)
+```
+
 ### Solution 2
 
 Better solution using nested select. Works in all cases.
@@ -89,4 +100,3 @@ WHERE N.COUNT_ALL = N.COUNT_SALARIES_OVER
 [http://www.h2database.com/html/tutorial.html](http://www.h2database.com/html/tutorial.html)
 
 [http://www.h2database.com/html/grammar.html](http://www.h2database.com/html/grammar.html)
-
