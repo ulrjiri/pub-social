@@ -134,15 +134,19 @@ rtt min/avg/max/mdev = 36.191/36.191/36.191/0.000 ms
 
 First, we need to tell wsl not to generate resolv.conf file and make it static. Create /etc/wsl.conf with the following content:
 
+```cmd
 root@testvm:/home/test# cat /etc/wsl.conf
 [network]
 generateResolvConf = false
+```
 
 Manually add the DNS servers as you wish. Create or edit the /etc/resolv.conf file:
 
+```cmd
 root@testvm:/home/test# cat /etc/resolv.conf
 nameserver 192.168.1.1
 nameserver 8.8.8.8
+```
 
 Networking shall be fully working now.
 
