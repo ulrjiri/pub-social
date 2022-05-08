@@ -1,0 +1,4 @@
+Back to basics, social responsibility & maybe little bit of hacking
+The microwave broke after only 4 years of home service. It took under an hour to be get it out, fixed and back in. The magnetron had to be dismounted to get to the root cause which was only the red cable and it’s connector down left on the second picture.
+The process raised one question: How much do we or do we want to own the device? Do service manuals or diagnostic SW belong to device or not?
+Same philosophy as in SW development: Some prefer open source and some closed commercial products. Some buy SW products as commodity some use free products and become commodity themselves. Sometimes we do not have the choice.
