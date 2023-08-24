@@ -1,4 +1,4 @@
-package com.google.ulrjiri;
+package com.gmail.ulrjiri;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;

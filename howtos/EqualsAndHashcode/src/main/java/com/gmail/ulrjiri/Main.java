@@ -2,7 +2,7 @@
   Sample program to demonstrate bad and good usage of equals and hashcode.
   Philosophy: One person can be just once in the barber at one moment in time. It cannot appear twice.
  */
-package com.google.ulrjiri;
+package com.gmail.ulrjiri;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
